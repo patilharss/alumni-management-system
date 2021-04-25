@@ -5,9 +5,10 @@ const app = express();
 
 dotenv.config({path:'./config.env'}); //dotenv
 
-require("./db/conn"); 
+require("./db/conn"); // database connection
 
 //const User =require('./model/userSchema');
+
 app.use(express.json());
 
 app.use(require('./router/auth'));//linking router files
