@@ -3,9 +3,16 @@ const mongoose=require('mongoose');
 const express = require('express');
 const app = express();
 
-dotenv.config({path:'./config.env'});
+dotenv.config({path:'./config.env'}); //dotenv
 
-require("./db/conn");
+require("./db/conn"); 
+
+//const User =require('./model/userSchema');
+app.use(express.json());
+
+app.use(require('./router/auth'));//linking router files
+
+const PORT =process.env.PORT;//getting port num
 
 //middleware
 
@@ -15,11 +22,11 @@ const middleware=(req,res,next)=>{
 }
 
 
-app.get('/',(req,res) =>{
+// app.get('/',(req,res) =>{
 
-    res.send('helloworld from server at port 3000');
+//     res.send('helloworld from server in app.js');
 
-});
+// });
 
 app.get('/about',middleware,(req,res)=>{
     console.log('in abt page')
@@ -43,5 +50,5 @@ app.get('/signup',(req,res)=>{
 
 
 app.listen(3000,()=>{
-    console.log('server is runing at port no 3000');
+    console.log('server is runing at port 3000');
 })
