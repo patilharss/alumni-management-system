@@ -1,6 +1,8 @@
 const { response } = require('express');
 const express = require('express');
 const router = express.Router();
+const bcrypt=require("bcryptjs");
+
 
 require('../db/conn');
 const User=require("../model/userSchema");
@@ -50,16 +52,19 @@ router.get('/',(req,res) =>{
 router.post('/register',async (req,res)=>{
 
     const {first_name ,last_name ,email ,phone ,admissionyear ,yearofgraduation ,department ,DOB ,employed ,designation ,companyName ,companyLocation ,about ,password ,cpassword }= req.body;
-    //^^ got data from user req.body.*
-    console.log(req.body);
-    //data validation
+    //^^ got data from user form / req.body.*
+    console.log(req.body);// print data in logs
 
+    //data validation
     if(! first_name || ! last_name || ! email ||! phone ||! admissionyear ||! yearofgraduation ||! department ||! DOB ||! employed ||! designation ||! companyName ||! companyLocation ||! about ||! password ||! cpassword){
+       //if any of the feilds are empty then-->
         return res.status(422).json({error:"pls fill all the required feilds"});
     }
 
     try{
-            //checking if email already exists in database or not
+            //checking if email and phone already exists in database or not
+
+            //getting satatus of email and phone from data base
         const userEmailAlreadyExistsStatus= await User.findOne({email:email})
         const userPhoneAlreadyExistsStatus= await User.findOne({phone:phone})
 
@@ -97,6 +102,8 @@ router.post('/register',async (req,res)=>{
 
 //Login route
 
+
+
 router.post('/signin',async(req,res)=>{
 
     // console.log(req.body);
@@ -109,15 +116,34 @@ router.post('/signin',async(req,res)=>{
         }
         //checking if mail is in database to log in
         const userLoginIsMailPresentInDatabase = await User.findOne({email:email});
-        console.log(userLoginIsMailPresentInDatabase);
 
+        //console.log(userLoginIsMailPresentInDatabase);//log 
+
+        //in email is in the database:
         if (userLoginIsMailPresentInDatabase){
 
-            res.json({message:"user mail found in database"});
+            //in userLoginIsMailPresentInDatabase we get full json file matching with email and we get only password from it using userLoginIsMailPresentInDatabase.password
+        
+
+        const passswordMatch=await bcrypt.compare(password,userLoginIsMailPresentInDatabase.password) // comparing entered password while login with datbase stored password
+
+
+
+        if (!passswordMatch){//if password doesnt match
+
+            res.status(400).json({error:"user credential error"});
 
         }else{
-            res.status(400).json({error:"Mail not found in database to log in "});
+            res.json({message:"logged in"});
         }
+
+        }else{
+            res.status(400).json({error:"user credential error"});
+
+        }
+
+
+        
 
 
 
