@@ -2,7 +2,7 @@ const { response } = require('express');
 const express = require('express');
 const router = express.Router();
 const bcrypt=require("bcryptjs");
-
+const jwt=require('jsonwebtoken');
 
 require('../db/conn');
 const User=require("../model/userSchema");
@@ -109,6 +109,7 @@ router.post('/signin',async(req,res)=>{
     // console.log(req.body);
     // res.json({message:"fetched"});
     try{
+        
         const {email,password}=req.body;
 
         if(!email || !password){
@@ -121,12 +122,14 @@ router.post('/signin',async(req,res)=>{
 
         //in email is in the database:
         if (userLoginIsMailPresentInDatabase){
-
-            //in userLoginIsMailPresentInDatabase we get full json file matching with email and we get only password from it using userLoginIsMailPresentInDatabase.password
+        //in userLoginIsMailPresentInDatabase we get full json file matching with email and we get only password from it using userLoginIsMailPresentInDatabase.password
+        const passswordMatch=await bcrypt.compare(password,userLoginIsMailPresentInDatabase.password) // comparing entered password while login with datbase stored password
         
 
-        const passswordMatch=await bcrypt.compare(password,userLoginIsMailPresentInDatabase.password) // comparing entered password while login with datbase stored password
-
+        //token part: 
+        const token =await userLoginIsMailPresentInDatabase.generateAuthToken();
+        console.log(token);
+        //
 
 
         if (!passswordMatch){//if password doesnt match
@@ -141,12 +144,6 @@ router.post('/signin',async(req,res)=>{
             res.status(400).json({error:"user credential error"});
 
         }
-
-
-        
-
-
-
     }catch(err){
         console.log(err);
     }
