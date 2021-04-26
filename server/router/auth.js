@@ -127,8 +127,21 @@ router.post('/signin',async(req,res)=>{
         
 
         //token part: 
+
+        //getting genrated token
         const token =await userLoginIsMailPresentInDatabase.generateAuthToken();
         console.log(token);
+
+        //Storeing token in cookies
+        res.cookie("jwtoken",token,{
+            expires:new Date(Date.now()+25892000000*12),
+            httpOnly:true
+        });
+
+        
+
+
+
         //
 
 
