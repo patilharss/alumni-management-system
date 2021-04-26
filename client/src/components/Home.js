@@ -2,8 +2,8 @@ import React from 'react'
 const Home =()=>{
     return(
     <div>
-        <p>WELCOME</p>
-        <h1>SGU</h1>
+        <p className="mt-5">WELCOME</p>
+        <h1>Sanjay Ghodawat University Alumni</h1>
     </div>
 
     )
