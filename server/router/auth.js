@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express');
 const router = express.Router();
 
@@ -44,7 +45,7 @@ router.get('/',(req,res) =>{
 // });
 
 
-///******ASYNC METHOD******/
+///******ASYNC METHOD******/Registration part:-
 
 router.post('/register',async (req,res)=>{
 
@@ -75,7 +76,7 @@ router.post('/register',async (req,res)=>{
 
         const user=new User(req.body);
         
-        const userRegisterStatus=await user.save();
+        const userRegisterStatus=await user.save(); //userRegisterStatus = True if data stored sucessfuly else false
 
         if (userRegisterStatus){
             res.status(201).json({message:"*****data stored sucessfuly****"});
@@ -88,4 +89,37 @@ router.post('/register',async (req,res)=>{
 
 });
 
+//Login route
+
+router.post('/signin',async(req,res)=>{
+
+    // console.log(req.body);
+    // res.json({message:"fetched"});
+    try{
+        const {email,password}=req.body;
+
+        if(!email || !password){
+            return res.status(400).json({error:"Please fill data"})
+        }
+        //checking if mail is in database to log in
+        const userLoginIsMailPresentInDatabase = await User.findOne({email:email});
+        console.log(userLoginIsMailPresentInDatabase);
+
+        if (userLoginIsMailPresentInDatabase){
+
+            res.json({message:"user mail found in database"});
+
+        }else{
+            res.status(400).json({error:"Mail not found in database to log in "});
+        }
+
+
+
+    }catch(err){
+        console.log(err);
+    }
+
+
+
+})
 module.exports=router;
