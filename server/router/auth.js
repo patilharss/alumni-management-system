@@ -49,7 +49,7 @@ router.get('/',(req,res) =>{
 
 router.post('/register',async (req,res)=>{
 
-    const { first_name ,last_name ,email ,phone ,admissionyear ,yearofgraduation ,department ,DOB ,employed ,designation ,companyName ,companyLocation ,about ,password ,cpassword }= req.body;
+    const {first_name ,last_name ,email ,phone ,admissionyear ,yearofgraduation ,department ,DOB ,employed ,designation ,companyName ,companyLocation ,about ,password ,cpassword }= req.body;
     //^^ got data from user req.body.*
     console.log(req.body);
     //data validation
@@ -71,16 +71,22 @@ router.post('/register',async (req,res)=>{
             return res.status(422).json({error:"Phone no already exists"});
         }else if(userEmailAlreadyExistsStatus){
             return res.status(422).json({error:"Email already registered"});
+        }else if(password != cpassword){
+            return res.status(422).json({error:"please match the passwords"});
+        }else{ //if every thing is correct then create the doc and save the data
+
+            const user=new User({first_name ,last_name ,email ,phone ,admissionyear ,yearofgraduation ,department ,DOB ,employed ,designation ,companyName ,companyLocation ,about ,password ,cpassword}); //cereate a new doc in database
+
+        //password hashing function is called in userSchema.js , called it before save() method
+
+        await user.save(); //store data in that doc ^^^^^userRegisterStatus = True if data stored sucessfuly else false
+
+        
+        res.status(201).json({message:"*****data stored sucessfuly****"});
         }
         
 
-        const user=new User(req.body);
         
-        const userRegisterStatus=await user.save(); //userRegisterStatus = True if data stored sucessfuly else false
-
-        if (userRegisterStatus){
-            res.status(201).json({message:"*****data stored sucessfuly****"});
-        }
 
     }catch(err){
         console.log(err);
