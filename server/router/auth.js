@@ -10,67 +10,81 @@ router.get('/',(req,res) =>{
 
 });
 
-router.post('/register',(req,res)=>{
+////*******CODE USING PROMISES*******/
 
-    const { first_name ,
-        last_name ,
-        email ,
-        phone ,
-        admissionyear ,
-        yearofgraduation ,
-        department ,
-        DOB ,
-        employed ,
-        designation ,
-        companyName ,
-        companyLocation ,
-        about ,
-        password ,
-        cpassword }= req.body;
+// router.post('/register',(req,res)=>{
+
+//     const { first_name ,last_name ,email ,phone ,admissionyear ,yearofgraduation ,department ,DOB ,employed ,designation ,companyName ,companyLocation ,about ,password ,cpassword }= req.body;
+//     //^^ got data from user req.body.*
+//     console.log(req.body);
+//     //data validation
+
+//     if(! first_name || ! last_name || ! email ||! phone ||! admissionyear ||! yearofgraduation ||! department ||! DOB ||! employed ||! designation ||! companyName ||! companyLocation ||! about ||! password ||! cpassword){
+//         return res.status(422).json({error:"pls fill all the required feilds"});
+//     }
+
+//     //checking if email already exists in database or not
+//     User.findOne({email:email})
+//         .then((userEmailAlreadyExists)=>{
+
+//          //in email is already registered then give error
+//             if(userEmailAlreadyExists){
+
+//                 return res.status(422).json({error:"Email already exists"});
+//         }
+//         //if email is not in db then register it as a new user
+//         //putting the data in database with req feilds that we want
+//             const user=new User(req.body);
+//             console.log(user);
+//         //saving the ^^ created document in database
+//             user.save().then(()=>{
+//                 res.status(201).json({message:"*****data stored sucessfuly****"});
+//             }).catch((err)=>res.status(500).json({error:'xxxxxxxx failed to store data xxxxxx'}));
+//     }).catch(err=>{console.log(err);});
+// });
+
+
+///******ASYNC METHOD******/
+
+router.post('/register',async (req,res)=>{
+
+    const { first_name ,last_name ,email ,phone ,admissionyear ,yearofgraduation ,department ,DOB ,employed ,designation ,companyName ,companyLocation ,about ,password ,cpassword }= req.body;
     //^^ got data from user req.body.*
     console.log(req.body);
     //data validation
 
-    if(! first_name ||
-        ! last_name ||
-        ! email ||
-        ! phone ||
-        ! admissionyear ||
-        ! yearofgraduation ||
-        ! department ||
-        ! DOB ||
-        ! employed ||
-        ! designation ||
-        ! companyName ||
-        ! companyLocation ||
-        ! about ||
-        ! password ||
-        ! cpassword){
+    if(! first_name || ! last_name || ! email ||! phone ||! admissionyear ||! yearofgraduation ||! department ||! DOB ||! employed ||! designation ||! companyName ||! companyLocation ||! about ||! password ||! cpassword){
         return res.status(422).json({error:"pls fill all the required feilds"});
     }
 
-    //checking if email already exists in database or not
-    User.findOne({email:email})
-        .then((userEmailAlreadyExists)=>{
+    try{
+            //checking if email already exists in database or not
+        const userEmailAlreadyExistsStatus= await User.findOne({email:email})
+        const userPhoneAlreadyExistsStatus= await User.findOne({phone:phone})
 
-         //in email is already registered then give error
-            if(userEmailAlreadyExists){
 
-                return res.status(422).json({error:"Email already exists"});
+        if(userEmailAlreadyExistsStatus && userPhoneAlreadyExistsStatus){
+
+            return res.status(422).json({error:"Email and phone are already registered with an account"});
+        }else if(userPhoneAlreadyExistsStatus){
+            return res.status(422).json({error:"Phone no already exists"});
+        }else if(userEmailAlreadyExistsStatus){
+            return res.status(422).json({error:"Email already registered"});
         }
-        //if email is not in db then register it as a new user
-        //putting the data in database with req feilds that we want
-            const user=new User(req.body);
-            console.log(user);
-        //saving the ^^ created document in database
-            user.save().then(()=>{
-                res.status(201).json({message:"data stored sucessfuly"});
-            }).catch((err)=>res.status(500).json({error:'failed to store data'}));
+        
 
+        const user=new User(req.body);
+        
+        const userRegisterStatus=await user.save();
 
-    }).catch(err=>{console.log(err);});
+        if (userRegisterStatus){
+            res.status(201).json({message:"*****data stored sucessfuly****"});
+        }
 
+    }catch(err){
+        console.log(err);
 
+    }
 
 });
 
