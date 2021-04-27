@@ -178,5 +178,28 @@ router.get('/getdata',authenticate,(req,res)=>{
     console.log('got data');
     res.send(req.rootUser);
 })
+//contact us page
+router.post('/contact',authenticate,async(req,res)=>{
+    
+    try{
+        const {name,email,phone,message}=req.body;
+        if(!name||!email||!phone||!message){
+            console.log('Error on contact form');
+            return res.json({error:"please fill contact form"});
+            
+        }
+        const userContactid=await User.findOne({_id:req.userID});
+
+        if (userContactid){
+
+            const userMessage = await userContactid.addMessage(name,email,phone,message);
+            await userContactid.save();
+            res.status(201).json({mesage:"message stored"});
+        }
+    }catch(error){
+        console.log(error)
+    }
+
+});
 
 module.exports=router;

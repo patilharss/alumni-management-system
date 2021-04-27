@@ -3,7 +3,7 @@ const Contact =()=>{
 
 
     /// checking if user is logged in part
-    const [userData,setUserData] = useState({});//getting data in userData
+    const [userData,setUserData] = useState({name:"",email:"",phone:"",message:""});//getting data in userData
     
 
     const userContact = async ()=>{
@@ -15,7 +15,8 @@ const Contact =()=>{
                 },
             });
             const data=await res.json();
-            setUserData(data);
+            console.log(data)
+            setUserData({...userData,name:data.firstname,email:data.email,phone:data.phone});
            
 
             
@@ -32,7 +33,49 @@ const Contact =()=>{
     useEffect(()=>{
             userContact();
     },[]);
+
 /// checking if user is logged in part^^
+
+
+//storing data in state
+
+const handleInputs=(e)=>{
+    const name=e.target.name;
+    const value=e.target.value;
+
+    setUserData({...userData,[name]:value});
+
+}
+
+//send data to backend , // message 
+const contactForm= async (e)=>{
+    e.preventDefault();
+
+    //obj restructureing
+
+    const {name,email,phone,message}=userData;
+
+    const res=await fetch('/contact',{
+        method:'POST',
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+
+            name,email,phone,message
+
+        })
+    });
+    const data=await res.json();
+
+    if(!data){
+        console.log("message not saved to db");
+    }else{
+        window.alert("Message Sent");
+        setUserData({...userData,message:""});
+    }
+}
+
     return(
     <>
        <div className="contact_info">
@@ -93,21 +136,21 @@ const Contact =()=>{
                            <div className="content_form_title">
                                Get in touch
                            </div>
-                           <form id="contact_form">
+                           <form method='POST' id="contact_form">
                                 <div className="contact_form_name d-flex justify-content-between align-items-between">
-                                    <input type="text" id="contact_form_name" className="contact_form_name input_feild" value={userData.firstname} placeholder="Name" required="true" autoComplete="nope"/>
-                                    <input type="text" id="contact_form_email" className="contact_form_email input_feild" value={userData.email} placeholder="Email" required="true" autoComplete="nope"/>
-                                    <input type="number" id="contact_form_phone" classphone="contact_form_phone input_feild" value={userData.phone} placeholder="Phone" required="true" autoComplete="nope"/>
+                                    <input type="text" id="contact_form_name" className="contact_form_name input_feild" onChange={handleInputs} name="name" value={userData.name} placeholder="Name" required="true" autoComplete="nope"/>
+                                    <input type="text" id="contact_form_email" className="contact_form_email input_feild" onChange={handleInputs} name="email" value={userData.email} placeholder="Email" required="true" autoComplete="nope"/>
+                                    <input type="number" id="contact_form_phone" classphone="contact_form_phone input_feild" onChange={handleInputs} name="phone" value={userData.phone} placeholder="Phone" required="true" autoComplete="nope"/>
                                 </div>
 
                                 <div className="contact_form_text mt-5">
-                                    <textarea className="text_feild contact_form_message" placeholder="Message" cols="50" row="10">
-
+                                    <textarea className="text_feild contact_form_message" placeholder="Message" cols="50" row="10" onChange={handleInputs} name="message" value={userData.message}>
+                                        
                                     </textarea>
                                 </div>
 
                                 <div className="contact_form_button mt-4">
-                                    <button type="submit" className="button contact_submit_button">Send Message</button>
+                                    <button onClick={contactForm} type="submit" className="button contact_submit_button">Send Message</button>
                                 </div>
                            </form>
                        </div>
