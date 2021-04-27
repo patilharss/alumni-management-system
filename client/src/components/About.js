@@ -1,9 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect ,useState} from 'react';
 import profile from "../images/profile.png";
 import {useHistory} from "react-router-dom";
+
+
 const About =()=>{
     
     const history=useHistory();
+    const [userData,setUserData] = useState({});//getting data in userData
+    
 
     const callAboutPage = async ()=>{
         try{
@@ -16,7 +20,10 @@ const About =()=>{
                 credentials:"include"
             });
             const data=await res.json();
-            console.log(data);
+            setUserData(data);
+           
+
+            
 
             if (!res.status===200){
                 const error=new Error(res.error);
@@ -44,8 +51,8 @@ const About =()=>{
                 </div>
                 <div className="col-md-6">
                     <div className="profile-head">
-                        <h5>harsh patil</h5>
-                        <h6>ceo</h6>
+                        <h5>{userData.firstname+' '+userData.lastname}</h5>
+                        <h6>{userData.designation +' at '+ userData.companyname}</h6>
                     </div>
                 </div>
                 <div className="col-md-2">
@@ -74,31 +81,54 @@ const About =()=>{
                     
                             <div className="row">
                                 <div className="col-md-6">
-                                    <label>User Id</label>
+                                    <label>ID</label>
                                 </div>
                                 <div className="col-md-6">
-                                   <p>13456789</p>
+                                   <p>{userData._id}</p>
                                 </div>
 
                             </div>
                             <div className="row mt-3">
                                 <div className="col-md-6">
-                                    <label>Name</label>
+                                    <label>Email</label>
                                 </div>
                                 <div className="col-md-6">
-                                   <p>Harsh Patil</p>
+                                   <p>{userData.email}</p>
                                 </div>
 
                             </div>
                             <div className="row mt-3">
                                 <div className="col-md-6">
-                                    <label>Name</label>
+                                    <label>Phone</label>
                                 </div>
                                 <div className="col-md-6">
-                                   <p>Harsh Patil</p>
+                                   <p>{userData.phone}</p>
                                 </div>
 
+
                             </div>
+                            <div className="row mt-3">
+                                <div className="col-md-6">
+                                    <label>Location</label>
+                                </div>
+                                <div className="col-md-6">
+                                   <p>{userData.companylocation}</p>
+                                </div>
+                                
+
+                            </div>
+                            <div className="row mt-3">
+                                <div className="col-md-6">
+                                    <label>About</label>
+                                </div>
+                                <div className="col-md-6">
+                                   <p>{userData.about}</p>
+                                </div>
+                                
+
+                            </div>
+                            
+                            
                             
 
                         </div>
