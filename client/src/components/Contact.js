@@ -1,5 +1,38 @@
-import React from 'react'
+import React,{ useEffect ,useState} from 'react'
 const Contact =()=>{
+
+
+    /// checking if user is logged in part
+    const [userData,setUserData] = useState({});//getting data in userData
+    
+
+    const userContact = async ()=>{
+        try{
+            const res= await fetch('/getdata',{
+                mathod:'GET',
+                headers:{
+                    "Content-Type":"application/json"
+                },
+            });
+            const data=await res.json();
+            setUserData(data);
+           
+
+            
+
+            if (!res.status===200){
+                const error=new Error(res.error);
+                throw error;
+            }
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+    useEffect(()=>{
+            userContact();
+    },[]);
+/// checking if user is logged in part^^
     return(
     <>
        <div className="contact_info">
@@ -62,9 +95,9 @@ const Contact =()=>{
                            </div>
                            <form id="contact_form">
                                 <div className="contact_form_name d-flex justify-content-between align-items-between">
-                                    <input type="text" id="contact_form_name" className="contact_form_name input_feild" placeholder="Name" required="true"/>
-                                    <input type="text" id="contact_form_email" className="contact_form_email input_feild" placeholder="Email" required="true"/>
-                                    <input type="number" id="contact_form_phone" classphone="contact_form_phone input_feild" placeholder="Phone" required="true"/>
+                                    <input type="text" id="contact_form_name" className="contact_form_name input_feild" value={userData.firstname} placeholder="Name" required="true" autoComplete="nope"/>
+                                    <input type="text" id="contact_form_email" className="contact_form_email input_feild" value={userData.email} placeholder="Email" required="true" autoComplete="nope"/>
+                                    <input type="number" id="contact_form_phone" classphone="contact_form_phone input_feild" value={userData.phone} placeholder="Phone" required="true" autoComplete="nope"/>
                                 </div>
 
                                 <div className="contact_form_text mt-5">

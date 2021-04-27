@@ -3,9 +3,6 @@ const express = require('express');
 const router = express.Router();
 const bcrypt=require("bcryptjs");
 const jwt=require('jsonwebtoken');
-
-const bodyParser = require('body-parser');
-
 const authenticate=require('../middleware/authenticate');
 require('../db/conn');
 const User=require("../model/userSchema");
@@ -167,13 +164,19 @@ router.post('/signin',async(req,res)=>{
 
 
 });
-router.use(bodyParser.json());
-router.use(bodyParser.urlencoded({ extended: false }));
+
 
 // abt us page
 router.get('/about',authenticate,(req,res)=>{
     console.log('in abt page')
     res.send(req.rootUser);
 });
+
+
+//get user data for contact us and home page
+router.get('/getdata',authenticate,(req,res)=>{
+    console.log('got data');
+    res.send(req.rootUser);
+})
 
 module.exports=router;
