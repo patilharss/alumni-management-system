@@ -1,8 +1,11 @@
 const dotenv=require("dotenv")
 const mongoose=require('mongoose');
-const express = require('express');
-const app = express();
 
+var express=require('express');
+var cookieParser=require('cookie-parser');
+
+var app=express();
+app.use(cookieParser());
 dotenv.config({path:'./config.env'}); //dotenv
 
 require("./db/conn"); // database connection
@@ -16,24 +19,12 @@ app.use(require('./router/auth'));//linking router files
 // const PORT = process.env.PORT;
 const port=3000;
 
-//middleware
-
-const middleware=(req,res,next)=>{
-    console.log('in middleware');
-    next();
-}
 
 
-// app.get('/',(req,res) =>{
-
-//     res.send('helloworld from server in app.js');
-
+// app.get('/about',(req,res)=>{
+//     console.log('in abt page')
+//     res.send('About page')
 // });
-
-app.get('/about',middleware,(req,res)=>{
-    console.log('in abt page')
-    res.send('About page')
-});
 
 app.get('/contact',(req,res)=>{
     console.log('in conatct page')
