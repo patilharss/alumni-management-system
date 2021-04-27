@@ -74,7 +74,7 @@ const Contact =()=>{
                                 </div>
 
                                 <div className="contact_form_button mt-4">
-                                    <button type="submit" className="button contact_submit_button">Send</button>
+                                    <button type="submit" className="button contact_submit_button">Send Message</button>
                                 </div>
                            </form>
                        </div>
