@@ -19,7 +19,7 @@ const Navbar =()=>{
         <NavLink className="nav-link" to="/">Home <span className="sr-only">(current)</span></NavLink>
       </li>
       <li className="nav-item">
-        <NavLink className="nav-link" to="/about">About</NavLink>
+        <NavLink className="nav-link" to="/about">Profile</NavLink>
       </li>
       <li className="nav-item">
         <NavLink className="nav-link" to="/contact">Contact Us</NavLink>
