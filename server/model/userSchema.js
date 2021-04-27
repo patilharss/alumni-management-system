@@ -3,11 +3,11 @@ const bcrypt=require("bcryptjs");
 const jwt=require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
-    first_name :{
+    firstname: {
         type:String,
         required:true
     },
-    last_name:{
+    lastname:{
         type:String,
         required:true
     },
@@ -19,12 +19,12 @@ const userSchema = new mongoose.Schema({
         type:Number,
         required:true
     },
-    admissionyear:{
+    yearofadmission:{
         type:Number,
         required:true
 
     },
-    yearofgraduation:{
+    yearofgrad:{
         type:Number,
         required:true
     },
@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    DOB:{
+    dateofbirth:{
         type:String,
         required:true
     },
@@ -44,11 +44,11 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    companyName:{
+    companyname:{
         type:String,
         required:true
     },
-    companyLocation:{
+    companylocation:{
         type:String,
         required:true
     },

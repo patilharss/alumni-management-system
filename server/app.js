@@ -13,7 +13,8 @@ app.use(express.json());
 
 app.use(require('./router/auth'));//linking router files
 
-const PORT =process.env.PORT;//getting port num
+// const PORT = process.env.PORT;
+const port=3000;
 
 //middleware
 
@@ -49,7 +50,6 @@ app.get('/signup',(req,res)=>{
     res.send('Register page')
 });
 
-
-app.listen(3000,()=>{
-    console.log('server is runing at port 3000');
+app.listen(port, (err) => {
+    console.log(`server is runnig at port no`+ port);
 })

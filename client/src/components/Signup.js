@@ -1,10 +1,10 @@
 
 import React,{useState} from 'react'
 import alumni from "../images/alumni1.jpg";
-import { NavLink, Route } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 
 const Signup =()=>{
-
+    const history=useHistory();
     const [user,setUser]=useState({
         firstname:"",
         lastname:"",
@@ -29,6 +29,41 @@ const Signup =()=>{
 
             setUser({...user,[name]:value});
         }
+
+        const PostData=async(e)=>{
+            e.preventDefault();
+            const {firstname,lastname,email,phone,yearofadmission,yearofgrad,department,dateofbirth,employed,designation,companyname,companylocation,about,password,cpassword} = user;
+
+            const res =await fetch("/register",{
+                method:'POST',
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({
+
+                    firstname,lastname,email,phone,yearofadmission,yearofgrad,department,dateofbirth,employed,designation,companyname,companylocation,about,password,cpassword
+
+                })
+            });
+            const data = await res.json();
+
+            if (data.status===422 || !data){
+                window.alert('Reg failed pls try again');
+                console.log('reg failed')
+            }else{
+                window.alert('Reg Done');
+                console.log('reg Done')
+
+                history.push("/signin");
+
+            }
+
+
+
+
+        }
+
+
     return(
     <>
 
@@ -37,7 +72,7 @@ const Signup =()=>{
                 <div className="signup-content">
                     <div className="signup-form">
                         <h2 className="form-title">Sign up</h2>
-                        <form className="register-form" id="register-form">
+                        <form method="POST" className="register-form" id="register-form">
 
                             <div className="form-group">
                                 <label htmlFor="name">
@@ -162,7 +197,7 @@ const Signup =()=>{
                             </div>
 
                             <div className="form-group form-button">
-                                <input type="submit" name="signup" id="signup" className="form-submit" value="register"/>
+                                <input type="submit" name="signup" id="signup" className="form-submit" value="register" onClick={PostData}/>
                             </div>     
                         </form>
                         </div>

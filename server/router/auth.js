@@ -51,12 +51,12 @@ router.get('/',(req,res) =>{
 
 router.post('/register',async (req,res)=>{
 
-    const {first_name ,last_name ,email ,phone ,admissionyear ,yearofgraduation ,department ,DOB ,employed ,designation ,companyName ,companyLocation ,about ,password ,cpassword }= req.body;
+    const {firstname ,lastname ,email ,phone ,yearofadmission ,yearofgrad ,department ,dateofbirth ,employed ,designation ,companyname ,companylocation ,about ,password ,cpassword }= req.body;
     //^^ got data from user form / req.body.*
     console.log(req.body);// print data in logs
 
     //data validation
-    if(! first_name || ! last_name || ! email ||! phone ||! admissionyear ||! yearofgraduation ||! department ||! DOB ||! employed ||! designation ||! companyName ||! companyLocation ||! about ||! password ||! cpassword){
+    if(! firstname || ! lastname || ! email ||! phone ||! yearofadmission ||! yearofgrad ||! department ||! dateofbirth ||! employed ||! designation ||! companyname ||! companylocation ||! about ||! password ||! cpassword){
        //if any of the feilds are empty then-->
         return res.status(422).json({error:"pls fill all the required feilds"});
     }
@@ -80,7 +80,7 @@ router.post('/register',async (req,res)=>{
             return res.status(422).json({error:"please match the passwords"});
         }else{ //if every thing is correct then create the doc and save the data
 
-            const user=new User({first_name ,last_name ,email ,phone ,admissionyear ,yearofgraduation ,department ,DOB ,employed ,designation ,companyName ,companyLocation ,about ,password ,cpassword}); //cereate a new doc in database
+            const user=new User({firstname ,lastname ,email ,phone ,yearofadmission ,yearofgrad ,department ,dateofbirth ,employed ,designation ,companyname ,companylocation ,about ,password ,cpassword}); //cereate a new doc in database
 
         //password hashing function is called in userSchema.js , called it before save() method
 
