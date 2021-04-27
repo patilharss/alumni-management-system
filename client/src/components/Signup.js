@@ -1,9 +1,34 @@
 
-import React from 'react'
+import React,{useState} from 'react'
 import alumni from "../images/alumni1.jpg";
 import { NavLink, Route } from 'react-router-dom'
 
 const Signup =()=>{
+
+    const [user,setUser]=useState({
+        firstname:"",
+        lastname:"",
+        email:"",
+        phone:"",
+        yearofadmission:"",
+        yearofgrad:"",
+        department:"",
+        dateofbirth:"",
+        employed:"",
+        designation:"",
+        companyname:"",
+        companylocation:"",
+        about:"",
+        password:"",
+        cpassword:""})
+        let name,value;
+        const handleInputs=(e)=>{
+            console.log(e)
+            name=e.target.name;
+            value=e.target.value;
+
+            setUser({...user,[name]:value});
+        }
     return(
     <>
 
@@ -18,16 +43,19 @@ const Signup =()=>{
                                 <label htmlFor="name">
                                 <i class="zmdi zmdi-account" style={{marginRight:1+ 'em'}}/>
                                 </label>
-                                <input type="text" name="firstname" id="firstname" autoComplete="off" placeholder="First Name" />
+                                <input type="text" name="firstname" id="firstname" autoComplete="off"
+                                    value={user.firstname} onChange={handleInputs} placeholder="First Name" />
                                 <span class="input-group-addon">   </span> 
-                                <input type="text" name="lastname" id="lastname" autoComplete="off" placeholder="Last Name"/>    
+                                <input type="text" name="lastname" id="lastname" autoComplete="off"
+                                    value={user.lastname} onChange={handleInputs} placeholder="Last Name"/>    
                             </div>
 
                             <div className="form-group>">
                                 <label htmlFor="email">
                                 <i class="zmdi zmdi-email" style={{marginRight:1+ 'em'}}></i>
                                 </label>
-                                <input type="text" name="email" id="email" autoComplete="off" placeholder="Email"/>
+                                <input type="text" name="email" id="email" autoComplete="off"
+                                    value={user.email} onChange={handleInputs} placeholder="Email"/>
                             </div>
 
                             <div className="form-group>">
@@ -38,14 +66,16 @@ const Signup =()=>{
                                     <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
                                 </svg>
                                 </label>
-                                <input type="dateofbirth" name="dateofbirth" id="dateofbirth" autoComplete="off" placeholder="Date of birth"/>
+                                <input type="dateofbirth" name="dateofbirth" id="dateofbirth" autoComplete="off"
+                                    value={user.dateofbirth} onChange={handleInputs} placeholder="Date of birth"/>
                             </div>
 
                             <div className="form-group>">
                                 <label htmlFor="phone">
                                 <i  class="zmdi zmdi-phone" style={{marginRight:1+ 'em'}}></i>
                                 </label>
-                                <input type="number" name="phone" id="phone" autoComplete="off" placeholder="Phone"/>
+                                <input type="number" name="phone" id="phone" autoComplete="off"
+                                    value={user.phone} onChange={handleInputs} placeholder="Phone"/>
                             </div>
 
 
@@ -55,7 +85,8 @@ const Signup =()=>{
                                 <label htmlFor="yearofadmission">
                                 <i  class="zmdi zmdi-calendar-alt" style={{marginRight:1+ 'em'}}></i>
                                 </label>
-                                <input type="number" name="yearofadmission" id="yearofadmission" autoComplete="off" placeholder="Year of Admission"/>
+                                <input type="number" name="yearofadmission" id="yearofadmission" autoComplete="off"
+                                    value={user.yearofadmission} onChange={handleInputs} placeholder="Year of Admission"/>
                             </div>
 
 
@@ -63,14 +94,16 @@ const Signup =()=>{
                                 <label htmlFor="yearofgrad">
                                 <i  class="zmdi zmdi-calendar-check" style={{marginRight:1+ 'em'}}></i>
                                 </label>
-                                <input type="number" name="yearofgrad" id="yearofgrad" autoComplete="off" placeholder="Year of Graduation"/>
+                                <input type="number" name="yearofgrad" id="yearofgrad" autoComplete="off"
+                                    value={user.yearofgrad} onChange={handleInputs} placeholder="Year of Graduation"/>
                             </div>
 
                             <div className="form-group>">
                                 <label htmlFor="department">
                                 <i  class="zmdi zmdi-book" style={{marginRight:1+ 'em'}}></i>
                                 </label>
-                                <input type="department" name="department" id="department" autoComplete="off" placeholder="Department"/>
+                                <input type="department" name="department" id="department" autoComplete="off"
+                                    value={user.department} onChange={handleInputs} placeholder="Department"/>
                             </div>
 
 
@@ -78,14 +111,16 @@ const Signup =()=>{
                                 <label htmlFor="employed">
                                 <i class="zmdi zmdi-case" style={{marginRight:1+ 'em'}}></i>
                                 </label>
-                                <input type="employed" name="employed" id="employed" autoComplete="off" placeholder="Employed"/>
+                                <input type="employed" name="employed" id="employed" autoComplete="off"
+                                    value={user.employed} onChange={handleInputs} placeholder="Employed"/>
                             </div>
 
                             <div className="form-group>">
                                 <label htmlFor="designation">
                                 <i class="zmdi zmdi-star" style={{marginRight:1+ 'em'}}></i>
                                 </label>
-                                <input type="designation" name="designation" id="designation" autoComplete="off" placeholder="Designation"/>
+                                <input type="designation" name="designation" id="designation" autoComplete="off"
+                                    value={user.designation} onChange={handleInputs} placeholder="Designation"/>
                             </div>
 
                             <div className="form-group>">
@@ -95,54 +130,52 @@ const Signup =()=>{
                                 <path d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z"/>
                                 </svg>
                                 </label>
-                                <input type="companyname" name="companyname" id="companyname" autoComplete="off" placeholder="Company Name"/>
+                                <input type="companyname" name="companyname" id="companyname" autoComplete="off"
+                                    value={user.companyname} onChange={handleInputs} placeholder="Company Name"/>
                             </div>
 
                             <div className="form-group>">
                                 <label htmlFor="companylocation">
                                 <i class="zmdi zmdi-gps-dot" style={{marginRight:0.9+ 'em'}}></i>
                                 </label>
-                                <input type="companylocation" name="companylocation" id="companylocation" autoComplete="off" placeholder="company Location"/>
+                                <input type="companylocation" name="companylocation" id="companylocation" autoComplete="off"
+                                    value={user.companylocation} onChange={handleInputs} placeholder="company Location"/>
                             </div>
 
                             <div className="form-group>">
                                 <label htmlFor="about">
                                 <i class="zmdi zmdi-info" style={{marginRight:0.9+ 'em'}}></i>
                                 </label>
-                                <input type="about" name="about" id="about" autoComplete="off" placeholder="About"/>
+                                <input type="about" name="about" id="about" autoComplete="off"
+                                    value={user.about} onChange={handleInputs} placeholder="About"/>
                             </div>
 
                             <div className="form-group>">
                                 <label htmlFor="password">
                                 <i class="zmdi zmdi-lock-outline" style={{marginRight:1+ 'em'}}></i>
                                 </label>
-                                <input type="password" name="password" id="password" autoComplete="off" placeholder="Password"/>
+                                <input type="password" name="password" id="password" autoComplete="off"
+                                    value={user.password} onChange={handleInputs} placeholder="Password"/>
                                 <span class="input-group-addon">   </span> 
-                                <input type="cpassword" name="cpassword" id="cpassword" autoComplete="off" placeholder="Confirm Password"/>
+                                <input type="password" name="cpassword" id="cpassword" autoComplete="off"
+                                    value={user.cpassword} onChange={handleInputs} placeholder="Confirm Password"/>
                             </div>
 
                             <div className="form-group form-button">
                                 <input type="submit" name="signup" id="signup" className="form-submit" value="register"/>
-
-
-                            </div>
-                            
+                            </div>     
                         </form>
                         </div>
-
                         <div className="signup-img">
                             <figure>
                                 <img src={alumni} alt="register-pic"/>
                             </figure>
                             <NavLink to="/signin" className="signup-image-link">I am already registered</NavLink>
-
-                        </div>
-                        
+                        </div>                       
                 </div>
             </div> 
         </section>
     </>
-
 )
 }
 

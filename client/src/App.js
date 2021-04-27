@@ -1,17 +1,22 @@
 import React from 'react'
-import{Route} from 'react-router-dom';
+import{Route,Switch} from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.css'
 import './App.css';
+import  Errorpage from"./components/Errorpage";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+
 const App =()=>{
     return(
-    <div>
+ 
          <>
     <Navbar/>
+
+    <Switch>
 
     <Route exact path="/">
         <Home/>
@@ -33,12 +38,15 @@ const App =()=>{
         <Signup/>
     </Route>
 
-
-
+    <Route>
+        <Errorpage/>
+    </Route>
+    </Switch>
     </>
 
 
-    </div>
+
+
 
     )
 }
