@@ -1,3 +1,4 @@
+import logo from '../images/sgulogo2.jpg'
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import {NavLink} from 'react-router-dom'
@@ -5,7 +6,9 @@ const Navbar =()=>{
     return(
     <>
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-  <NavLink className="navbar-brand" to="#">SGU Alumni</NavLink>
+  <NavLink className="navbar-brand" to="#">
+    <img src={logo} alt="logo" style={{marginRight:0.5+ 'em'}}/>Sanjay Ghodawat University
+  </NavLink>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
   </button>
