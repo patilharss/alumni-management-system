@@ -5,6 +5,7 @@ import {useHistory} from "react-router-dom";
 
 const About =()=>{
     
+    /// checking if user is logged in part
     const history=useHistory();
     const [userData,setUserData] = useState({});//getting data in userData
     
@@ -39,6 +40,9 @@ const About =()=>{
     useEffect(()=>{
             callAboutPage();
     },[]);
+/// checking if user is logged in part^^
+
+
     return(
     <>
     <div className="container emp_prrofile">

@@ -202,4 +202,13 @@ router.post('/contact',authenticate,async(req,res)=>{
 
 });
 
+
+// logout  page
+router.get('/logout',(req,res)=>{
+    console.log('in logout page')
+    res.clearCookie('jwtoken',{path:'/'})
+    res.status(200).send("logout done");
+});
+
+
 module.exports=router;

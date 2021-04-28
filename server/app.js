@@ -28,10 +28,10 @@ const port=3000;
 //     res.send('About page')
 // });
 
-app.get('/contact',(req,res)=>{
-    console.log('in conatct page')
-    res.send('Contact page')
-});
+// app.get('/contact',(req,res)=>{
+//     console.log('in conatct page')
+//     res.send('Contact page')
+// });
 
 app.get('/signin',(req,res)=>{
     console.log('in signin page');
