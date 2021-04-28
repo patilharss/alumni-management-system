@@ -59,6 +59,8 @@ const About =()=>{
                         <h6>{userData.designation +' at '+ userData.companyname}</h6>
                     </div>
                 </div>
+
+                {/* edit profilr button */}
                 <div className="col-md-2">
                     <input type="submit" className="profile-edit-btn" name="btnAddmore"value="Edit Profile"/>
 

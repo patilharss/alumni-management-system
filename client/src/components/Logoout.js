@@ -1,8 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useContext,useEffect } from 'react'
 import {useHistory} from 'react-router-dom';
+import {UserContext} from '../App';
 const Logout=()=>{
     //promises
+    const {state,dispatch}=useContext(UserContext);
+
+
     const history=useHistory();
+    
     useEffect(()=>{
         fetch('/logout',{
             method:'GET',
@@ -12,8 +17,9 @@ const Logout=()=>{
             },
             credentials:"include"
         }).then((res)=>{
+            dispatch({type:'USER',payload:false});
             history.push('/signin',{replace:true});
-            if (res.status!=200){
+            if (res.status!==200){
                 const error=new Error(res.error);
                 throw error;
             }

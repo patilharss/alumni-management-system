@@ -1,8 +1,19 @@
-import React,{useState} from 'react'
+import React,{useContext, useState} from 'react'
 import alumni from "../images/alumni1.jpg"
 import { NavLink, useHistory } from 'react-router-dom'
+import {UserContext} from '../App';
+
+window.alert = function() {};
 
 const Login =()=>{
+
+
+    const {state,dispatch}=useContext(UserContext);
+
+
+
+
+
     const history=useHistory();
     const[email,setEmail]=useState('');
     const[password,setPassword]=useState('');
@@ -27,7 +38,7 @@ const Login =()=>{
         if(res.status===400||!data){
             window.alert("Invalid credential")
         }else{
-            window.alert("Login sucessful")
+            dispatch({type:'USER',payload:true})
             history.push('/')
 
         }
